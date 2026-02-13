@@ -6,7 +6,7 @@ By default, when you deploy Postgres from the official Postgres template on
 Railway, the image that is used is built from this repository!
 
 [![Deploy on
-Railway](https://railway.app/button.svg)](https://railway.app/template/postgres)
+Railway](https://railway.app/button.svg)](https://railway.app/template/postgres?referralCode=zoeyjones)
 
 ### Why though?
 
@@ -47,10 +47,10 @@ Example usage:
 
 ```bash
 # Auto-update to latest minor versions (recommended for development)
-docker run ghcr.io/railwayapp-templates/postgres-ssl:17
+docker run ghcr.io/credoqr/postgres-ssl:17
 
 # Pin to specific minor version (recommended for production)
-docker run ghcr.io/railwayapp-templates/postgres-ssl:17.6
+docker run ghcr.io/credoqr/postgres-ssl:17.6
 ```
 
 ### A note about ports
