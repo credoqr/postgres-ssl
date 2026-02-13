@@ -4,6 +4,17 @@ FROM postgres:${POSTGRES_VERSION}
 # Install OpenSSL and sudo
 RUN apt-get update && apt-get install -y openssl sudo
 
+# Build and install PGMQ extension
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential ca-certificates curl postgresql-server-dev-17 \
+    && curl -fsSL https://github.com/tembo-io/pgmq/archive/refs/tags/v1.7.0.tar.gz \
+        | tar xz -C /tmp \
+    && make -C /tmp/pgmq-1.7.0/pgmq-extension \
+    && make -C /tmp/pgmq-1.7.0/pgmq-extension install \
+    && rm -rf /tmp/pgmq-1.7.0 \
+    && apt-get purge -y --auto-remove build-essential curl postgresql-server-dev-17 \
+    && rm -rf /var/lib/apt/lists/*
+
 # Allow the postgres user to execute certain commands as root without a password
 RUN echo "postgres ALL=(root) NOPASSWD: /usr/bin/mkdir, /bin/chown, /usr/bin/openssl" > /etc/sudoers.d/postgres
 
