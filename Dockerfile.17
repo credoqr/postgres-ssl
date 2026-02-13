@@ -7,8 +7,10 @@ RUN apt-get update && apt-get install -y openssl sudo
 # Build and install PGMQ extension
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential ca-certificates curl postgresql-server-dev-17 \
-    && curl -fsSL https://github.com/tembo-io/pgmq/archive/refs/tags/v1.7.0.tar.gz \
-        | tar xz -C /tmp \
+    && curl -fsSL https://github.com/tembo-io/pgmq/archive/refs/tags/v1.7.0.tar.gz -o /tmp/pgmq.tar.gz \
+    && echo "6e65bee87cf56aa569213f241ac911bab2eae371e9b684dc21f8fbacf400686f  /tmp/pgmq.tar.gz" | sha256sum -c - \
+    && tar xzf /tmp/pgmq.tar.gz -C /tmp \
+    && rm /tmp/pgmq.tar.gz \
     && make -C /tmp/pgmq-1.7.0/pgmq-extension \
     && make -C /tmp/pgmq-1.7.0/pgmq-extension install \
     && rm -rf /tmp/pgmq-1.7.0 \
